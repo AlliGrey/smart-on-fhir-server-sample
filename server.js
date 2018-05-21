@@ -16,6 +16,10 @@ let urlMap = {};
 
 app.use(morgan('dev'));
 
+app.get('/', (req, res) => {
+  res.send('Hello world\n');
+});
+
 app.get('/api/version', (req, res) => res.status(200).send(pkg.version));
 
 /**

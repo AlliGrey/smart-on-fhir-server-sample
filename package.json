@@ -1,0 +1,31 @@
+{
+  "name": "smart-on-fhir-server-sample",
+  "version": "1.0.0",
+  "description": "Sample server application to accompany the smart-on-fhir tutorial",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlliGrey/smart-on-fhir-server-sample.git"
+  },
+  "author": "Allison Graham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlliGrey/smart-on-fhir-server-sample/issues"
+  },
+  "homepage": "https://github.com/AlliGrey/smart-on-fhir-server-sample#readme",
+  "dependencies": {
+    "express": "4.14.1",
+    "fhir.js": "0.0.20",
+    "morgan": "1.8.1",
+    "nconf": "0.8.4",
+    "nodemon": "1.11.0",
+    "request-promise": "4.1.1"
+  }
+}
+
+
+

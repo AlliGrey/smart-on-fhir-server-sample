@@ -23,41 +23,49 @@ app.get('/', (req, res) => {
 app.get('/api/version', (req, res) => res.status(200).send(pkg.version));
 
 /**
- * Index
+ * Index - This is in progress.
+ * This will exchange the auth code for a token when implemented.
  */
 app.get('/api/index', async (req, res) => {
   try {
-    const authorizationCode = req.query.code;
-    const source = req.query.source;
-
-    const metadataContext = {
-      url: `${urlMap[source].iisUrl}/metadata`,
-      headers: {
-        'Accept': 'application/json'
-      }
-    };
-
-    const metadataResponse = await rp(metadataContext);
-    const tokenUrl = JSON.parse(metadataResponse).rest[0].security.extension[0].extension.filter(item => {
-      return item.url === ("token")
-    })[0].valueUri;
-
-    const accessContext = {
-      url: tokenUrl
-    }
-
-    return res.status(200).json({
-      authorizationCode,
-      tokenUrl
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error);
+    res.send("index");
+  } catch (err) {
+    console.log("Error calling metadata endpoint.");
+    return res.status(err.statusCode).json({
+      "message": err.message});
   }
+  // try {
+  //   const authorizationCode = req.query.code;
+  //   const source = req.query.source;
+
+  //   const metadataContext = {
+  //     url: `${urlMap[source].iisUrl}/metadata`,
+  //     headers: {
+  //       'Accept': 'application/json'
+  //     }
+  //   };
+
+  //   const metadataResponse = await rp(metadataContext);
+  //   const tokenUrl = JSON.parse(metadataResponse).rest[0].security.extension[0].extension.filter(item => {
+  //     return item.url === ("token")
+  //   })[0].valueUri;
+
+  //   const accessContext = {
+  //     url: tokenUrl
+  //   }
+
+  //   return res.status(200).json({
+  //     authorizationCode,
+  //     tokenUrl
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  //   return res.status(500).json(error);
+  // }
 });
 
 /**
- * Launch
+ * Launch - hitting secure and doing metadata call and authorize calls.
  */
 app.get('/api/launch', async (req, res) => {
   try{
@@ -107,6 +115,9 @@ app.get('/api/launch', async (req, res) => {
   }
 });
 
+/**
+ * This is currently set up to hit the open endpoint until I get the OAuth2 stuff working.
+ */
 app.get('/api/patient/:patientId', (req, res) => {
   const patientId = req.params.patientId;
   const authorizationCode = req.get("Authorization");

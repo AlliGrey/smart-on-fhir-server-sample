@@ -27,13 +27,7 @@ app.get('/api/version', (req, res) => res.status(200).send(pkg.version));
  * This will exchange the auth code for a token when implemented.
  */
 app.get('/api/index', async (req, res) => {
-  try {
-    res.send("index");
-  } catch (err) {
-    console.log("Error calling metadata endpoint.");
-    return res.status(err.statusCode).json({
-      "message": err.message});
-  }
+  res.status(200).send("index");
   // try {
   //   const authorizationCode = req.query.code;
   //   const source = req.query.source;
@@ -100,13 +94,16 @@ app.get('/api/launch', async (req, res) => {
 
     const authorizeResponse = await rp(authorizeContext);
 
-    return res.status(200).json({
-      "source": source,
-      "launchCode": launchCode,
-      "issUrl": issUrl,
-      "authorizeUrl": authorizeUrl,
-      "authorizeResponse": authorizeResponse
-    });
+    // Diagnostic information return value
+    // return res.status(200).json({
+    //   "source": source,
+    //   "launchCode": launchCode,
+    //   "issUrl": issUrl,
+    //   "authorizeUrl": authorizeUrl,
+    //   "authorizeResponse": authorizeResponse
+    // });
+
+    return res.status(200).send(authorizeResponse);
   } catch (err) {
     console.log("Error calling metadata endpoint.");
     return res.status(err.statusCode).json({
